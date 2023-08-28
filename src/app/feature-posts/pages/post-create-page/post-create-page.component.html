@@ -1,0 +1,15 @@
+<div>
+  <form [formGroup]="postGroup">
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Body</mat-label>
+      <textarea matInput formControlName="body"></textarea>
+    </mat-form-field>
+  </form>
+  <div>
+    <button mat-raised-button color="primary" (click)="savePost()" [disabled]="postGroup.invalid">Save</button>
+  </div>
+</div>

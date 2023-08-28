@@ -1,0 +1,9 @@
+:host {
+  display: block;
+  height: 60px;
+  flex-shrink: 0;
+}
+
+::ng-deep .mat-paginator .mat-paginator-container {
+  justify-content: flex-start;
+}
