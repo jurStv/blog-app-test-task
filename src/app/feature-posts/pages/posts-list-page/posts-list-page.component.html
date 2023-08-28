@@ -1,0 +1,72 @@
+<ng-container *appLet="posts$ | async as posts">
+  <app-posts-search-field-container></app-posts-search-field-container>
+  <div class="posts-table-container table-view__table-container">
+    <div class="posts-table table-view__table">
+      <h4 class="mat-headline-4 empty-message" *ngIf="posts | isEmpty">
+        No Posts
+      </h4>
+      <mat-table *ngIf="posts | isEmpty | not" [dataSource]="posts">
+
+          <ng-container matColumnDef="id">
+            <mat-header-cell class="posts-table__header-cell table-view__table-cell--name" *matHeaderCellDef>
+                Post id
+            </mat-header-cell>
+            <mat-cell class="posts-table__cell table-view__table-cell--name" *matCellDef="let post">
+              {{ post.id }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="title">
+            <mat-header-cell class="posts-table__header-cell" *matHeaderCellDef>
+              Post title
+            </mat-header-cell>
+            <mat-cell class="posts-table__cell" *matCellDef="let post">
+              {{ post.title }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="body">
+            <mat-header-cell class="posts-table__header-cell" *matHeaderCellDef>
+              Post body
+            </mat-header-cell>
+            <mat-cell class="posts-table__cell" *matCellDef="let post">
+              {{ post.body | truncate: 100 }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="menu">
+            <mat-header-cell class="table-view__table-cell table-view__table-cell--menu" *matHeaderCellDef></mat-header-cell>
+            <mat-cell class="table-view__table-cell table-view__table-cell--menu" *matCellDef="let post">
+              <button
+                class="replacement-term__menu-button"
+                mat-icon-button
+                appStopPropagation
+                [matMenuTriggerFor]="menu"
+                [matMenuTriggerData]="{ post: post }">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+
+        <mat-header-row class="posts-table__header-row" *matHeaderRowDef="displayedColumns; sticky: true">
+        </mat-header-row>
+        <mat-row (click)="viewPost(post)" class="posts-table__row posts-table__row--clickable" *matRowDef="let post; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+    <app-posts-paging-container></app-posts-paging-container>
+  </div>
+</ng-container>
+<mat-menu #menu="matMenu">
+  <ng-template matMenuContent let-post="post">
+    <button mat-menu-item (click)="viewPost(post)">
+      <span>View</span>
+    </button>
+    <button mat-menu-item (click)="editPost(post)">
+      <span>Edit</span>
+    </button>
+    <button mat-menu-item color="warn" (click)="deletePost(post)">
+      <span>Delete</span>
+    </button>
+  </ng-template>
+</mat-menu>

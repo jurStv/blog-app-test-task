@@ -1,0 +1,81 @@
+:host {
+  display: block;
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.posts-table {
+  height: 100%;
+  max-height: 100%;
+  display: block;
+  flex-shrink: 1;
+  overflow-y: scroll;
+
+  &-container {
+    background-color: #fff;
+    filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.25));
+    border-radius: 4px;
+
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__cell,
+  &__header-cell {
+    min-width: 115px;
+  }
+
+  &__row,
+  &__header-row {
+    min-width: 100%;
+    display: inline-flex;
+    border: none;
+    min-height: 32px;
+    transition: background-color .1s ease-in;
+    background-color: #fff;
+    align-items: stretch;
+
+    font-size: 14px;
+    line-height: 16px;
+    color: #000000;
+  }
+
+  &__row {
+    box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.05);
+
+    &--clickable {
+      cursor: pointer;
+    }
+
+    &:hover {
+      background-color: rgba(151, 151, 151, 0.1);
+    }
+  }
+
+  &__header-row {
+    box-shadow: inset 0px -1.5px 0px rgba(0, 0, 0, 0.15);
+
+    font-weight: 500;
+  }
+}
+
+.table-view {
+  &__table-container {
+    height: 88%;
+  }
+
+  &__table-cell {
+    &--name {
+      min-width: 300px;
+      max-width: 300px;
+    }
+
+    &--menu {
+      max-width: 70px;
+      min-width: 70px;
+    }
+  }
+}
