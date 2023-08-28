@@ -26,10 +26,10 @@ export class TopProgressBarService {
   }
 
   constructor(
-    private readonly componentFactoryResolver: ComponentFactoryResolver,
-    private readonly appRef: ApplicationRef,
-    private readonly injector: Injector,
-    @Inject(DOCUMENT) private readonly document: Document,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private appRef: ApplicationRef,
+    private injector: Injector,
+    @Inject(DOCUMENT) private document: Document,
   ) {
     this.bodyPortalHost = new DomPortalOutlet(
       document.body,

@@ -24,7 +24,7 @@ export class PostsSearchFieldContainerComponent implements OnInit {
   }
 
   constructor(
-    private readonly store: Store<IAppState>,
+    private store: Store<IAppState>,
   ) {}
 
   ngOnInit(): void {
