@@ -171,4 +171,23 @@ export class PostsEffects {
       map(() => actions.requestPosts())
     )
   );
+
+  showPostNotFoundSnack: Observable<Action> = createEffect(() =>
+    this.action$.pipe(
+      ofType(
+        actions.showPostNotFoundSnack,
+      ),
+      switchMap(() => {
+        const snackRef = this.snackBar.open(
+          'Post not found!',
+          'Posts',
+          { duration: 4500, horizontalPosition: 'right' }
+        );
+
+        return snackRef.onAction().pipe(
+          map(() => go({ to: ['posts', 'list'] }))
+        );
+      })
+    )
+  );
 }

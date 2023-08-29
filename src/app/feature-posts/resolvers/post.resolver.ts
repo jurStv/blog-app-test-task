@@ -29,7 +29,7 @@ export const postResolver: ResolveFn<IPost> = (route: ActivatedRouteSnapshot) =>
         variables: { id }
       }).pipe(
         take(1),
-        map(({ data: { post } }) => post.id ? post : null),
+        map(({ data: { post } }) => post && post.id ? post : null),
         catchError((err) => of(null))
       );
     }),

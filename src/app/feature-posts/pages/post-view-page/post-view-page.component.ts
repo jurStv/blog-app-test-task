@@ -1,11 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy, HostBinding } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
-import { Observable, map, of, switchMap, tap } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
+import { not } from 'ramda';
 
 import { IPost } from '@app/shared/models';
-import { IAppState, back } from '@app/shared/+state';
+import { IAppState } from '@app/shared/+state';
+import { showPostNotFoundSnack } from '@app/feature-posts/+state';
 
 @Component({
   templateUrl: './post-view-page.component.html',
@@ -18,28 +19,17 @@ export class PostViewPageComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private snackBar: MatSnackBar,
     private store: Store<IAppState>
   ) {}
 
   ngOnInit(): void {
     this.post$ = this.activatedRoute.data.pipe(
       map(({ post }) => post),
-      switchMap((post) => {
-        if (post) {
-          return of(post);
+      tap((post) => {
+        if (not(post)) {
+          this.store.dispatch(showPostNotFoundSnack())
         }
-
-        const snackRef = this.snackBar.open(
-          'Post not found!',
-          'Back',
-          { duration: 4500, horizontalPosition: 'right' }
-        );
-
-        return snackRef.onAction().pipe(
-          tap(() => this.store.dispatch(back()))
-        );
-      }),
+      })
     );
   }
 

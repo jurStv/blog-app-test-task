@@ -89,3 +89,7 @@ export const requestCreatePostFailure = createAction(
   '[Posts] Request Create Post Failure',
   props<{ error: any; }>()
 );
+
+export const showPostNotFoundSnack = createAction(
+  '[Posts] Show Post Not Found Snack',
+);
