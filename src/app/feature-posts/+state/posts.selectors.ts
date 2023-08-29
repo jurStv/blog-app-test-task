@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { getRouterSelectors } from '@ngrx/router-store';
-import { find, propEq, propOr } from 'ramda';
+import { find, propEq } from 'ramda';
 
 import { IPostsState, POSTS_FEATURE_KEY, selectRouter } from '@app/shared/+state';
 import { createPaginatorSelectors } from '@app/shared/utils';
@@ -45,11 +45,6 @@ export const selectPostsError = createSelector(
 export const selectPostsLoading = createSelector(
   selectPostsState,
   (state: IPostsState) => state.loading
-)
-
-export const selectSelectedPost = createSelector(
-  selectPostsState,
-  (state: IPostsState) => state.selected
 )
 
 export const {

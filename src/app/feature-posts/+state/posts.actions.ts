@@ -18,14 +18,6 @@ export const requestPostsFailure = createAction(
   props<{ error: any; }>()
 );
 
-export const cancelRequestPosts = createAction(
-  '[Posts] Cancel Request Posts',
-);
-
-export const refreshLastSearchPosts = createAction(
-  '[Posts] Refresh Last Posts',
-);
-
 export const {
   nextPage: nextPostPage,
   previousPage: previousPostPage,
@@ -38,11 +30,6 @@ export const {
 
 export const resetSearchPostsPagingConfig = createAction(
   '[Posts] Reset Posts Paging Config',
-);
-
-export const selectPost = createAction(
-  '[Posts] Select Post',
-  props<{ selected: IPost; }>()
 );
 
 export const updateSearchQuery = createAction(

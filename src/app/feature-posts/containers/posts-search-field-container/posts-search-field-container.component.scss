@@ -2,3 +2,7 @@
   display: block;
   max-width: 280px;
 }
+
+::ng-deep .mat-mdc-text-field-wrapper {
+  background-color: #fff;
+}

@@ -16,6 +16,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
+import { LetDirective as NgrxLetDirective } from '@ngrx/component';
+
 import { PipesModule } from './pipes';
 import { LetDirective, StopPropagationDirective, GoBackDirective } from './directives';
 import { ConfirmDialogComponent } from './components';
@@ -53,7 +55,8 @@ const MATERIAL_MODULES = [
     ...NG_MODULES,
     ...MATERIAL_MODULES,
     PipesModule,
-    ProgressModule
+    ProgressModule,
+    NgrxLetDirective
   ],
   exports: [
     ...NG_MODULES,
@@ -61,7 +64,8 @@ const MATERIAL_MODULES = [
     ...COMPONENTS,
     ...DIRECTIVES,
     PipesModule,
-    ProgressModule
+    ProgressModule,
+    NgrxLetDirective
   ],
   providers: [SharedDialogService]
 })

@@ -4,7 +4,7 @@ import { Observable, firstValueFrom } from 'rxjs';
 
 import { IAppState, go } from '@app/shared/+state';
 import { IPost } from '@app/shared/models';
-import { requestDeletePost, selectPostsResults } from '@app/feature-posts/+state';
+import { requestDeletePost, selectPostsLoading, selectPostsResults } from '@app/feature-posts/+state';
 import { SharedDialogService } from '@app/shared/services';
 
 @Component({
@@ -15,6 +15,7 @@ import { SharedDialogService } from '@app/shared/services';
 export class PostsListPageComponent implements OnInit {
   @HostBinding('class.full-page-size') cl = true;
   posts$: Observable<IPost[]>;
+  loading$: Observable<boolean>;
   displayedColumns = ['id', 'title', 'body', 'menu'];
 
   constructor(
@@ -24,6 +25,7 @@ export class PostsListPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.posts$ = this.store.select(selectPostsResults);
+    this.loading$ = this.store.select(selectPostsLoading);
   }
 
   viewPost(post: IPost) {

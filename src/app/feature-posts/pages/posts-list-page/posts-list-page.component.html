@@ -1,11 +1,17 @@
-<ng-container *appLet="posts$ | async as posts">
-  <app-posts-search-field-container></app-posts-search-field-container>
+<ng-container *ngrxLet="{ posts: posts$, loading: loading$ } as vm">
+  <div class="top-actions-container">
+    <app-posts-search-field-container></app-posts-search-field-container>
+    <a mat-raised-button color="primary" class="sidenav__nav-link" routerLink="../create">New Post</a>
+  </div>
   <div class="posts-table-container table-view__table-container">
     <div class="posts-table table-view__table">
-      <h4 class="mat-headline-4 empty-message" *ngIf="posts | isEmpty">
+      <h4 class="mat-headline-6 table-message" *ngIf="vm.posts | isEmpty | and: !vm.loading">
         No Posts
       </h4>
-      <mat-table *ngIf="posts | isEmpty | not" [dataSource]="posts">
+      <h4 class="mat-headline-6 table-message" *ngIf="vm.loading">
+        Loading...
+      </h4>
+      <mat-table *ngIf="vm.posts | isEmpty | not | and: !vm.loading" [dataSource]="vm.posts">
 
           <ng-container matColumnDef="id">
             <mat-header-cell class="posts-table__header-cell table-view__table-cell--name" *matHeaderCellDef>

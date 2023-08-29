@@ -1,0 +1,28 @@
+:host {
+  display: block;
+  padding: 30px 0;
+}
+
+mat-card {
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+form {
+  padding-top: 15px;
+}
+
+mat-form-field {
+  display: block;
+  margin: 10px auto;
+}
+
+textarea {
+  min-height: 200px;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

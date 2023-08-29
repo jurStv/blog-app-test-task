@@ -10,7 +10,6 @@ export interface IAppState {
 export const POSTS_FEATURE_KEY = 'posts';
 export interface IPostsState {
   results: IPost[];
-  selected: IPost;
   loading: boolean;
   error: any;
   paging: IPagingConfig;

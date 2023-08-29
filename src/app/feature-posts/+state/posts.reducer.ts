@@ -7,7 +7,6 @@ import * as postsActions from './posts.actions';
 
 export const initialPostsState: IPostsState = {
   results: [],
-  selected: null,
   loading: false,
   error: null,
   paging: INITIAL_PAGING_CONFIG,
@@ -23,8 +22,6 @@ export const postsReducer = createReducer(
   on(postsActions.requestPosts, state => ({ ...state, loading: true, error: null })),
   on(postsActions.requestPostsFailure, (state, { error }) => ({ ...state, loading: false, error })),
   on(postsActions.requestPostsSuccess, (state, { results }) => ({ ...state, results, loading: false, error: null })),
-  on(postsActions.cancelRequestPosts, state => ({ ...state, loading: false, error: null })),
-  on(postsActions.selectPost, (state, { selected }) => ({ ...state, selected })),
   on(postsActions.requestDeletePostSuccess, (state, { id }) => ({
     ...state,
     results: state.results.filter((post) => post.id !== id)

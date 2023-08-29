@@ -20,3 +20,9 @@ mat-form-field {
 textarea {
   min-height: 200px;
 }
+
+mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

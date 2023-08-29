@@ -9,7 +9,7 @@
 .posts-table {
   height: 100%;
   max-height: 100%;
-  display: block;
+  display: flex;
   flex-shrink: 1;
   overflow-y: scroll;
 
@@ -78,4 +78,16 @@
       min-width: 70px;
     }
   }
+}
+
+.top-actions-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-message {
+  text-align: center;
+  margin: 15px auto;
+  align-self: center;
 }
