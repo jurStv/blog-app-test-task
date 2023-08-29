@@ -84,7 +84,7 @@ export class PostsEffects {
       switchMap(({ id, notificationDisabled }) => {
         return this.apollo.mutate({
           mutation: operations.deletePost,
-          variables: { options: { id } }
+          variables: { id }
         }).pipe(
           tap(() => {
             if (not(notificationDisabled)) {
@@ -139,7 +139,7 @@ export class PostsEffects {
       switchMap(({ options, notificationDisabled, requiresNavigationToList }) => {
         return this.apollo.mutate<IResponsePost>({
           mutation: operations.createPost,
-          variables: { options }
+          variables: { ...options }
         }).pipe(
           tap(() => {
             if (not(notificationDisabled)) {
