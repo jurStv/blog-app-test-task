@@ -61,5 +61,5 @@ export const selectPostRouteData = createSelector(
 export const selectRoutedPost = createSelector(
   selectPostsResults,
   selectPostIdRouteParam,
-  (posts, postId) => find<IPost>(propEq(Number(postId), 'id'), posts)
+  (posts, postId) => find<IPost>(propEq(postId, 'id'), posts)
 );

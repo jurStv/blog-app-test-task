@@ -16,6 +16,12 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-button color="primary" appGoBack>Back</button>
-    <button mat-raised-button color="primary" (click)="savePost()" [disabled]="postGroup.invalid">Save</button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="savePost()"
+      [disabled]="postGroup.invalid || postGroup.disabled">
+      Save
+    </button>
   </mat-card-actions>
 </mat-card>

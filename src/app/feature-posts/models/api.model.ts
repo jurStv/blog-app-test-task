@@ -21,7 +21,7 @@ export interface IResponsePostsData {
 }
 
 export interface IRequestUpdatePostOptions {
-  id: number;
+  id: string;
   input: {
     title: string;
     body: string;
@@ -29,7 +29,7 @@ export interface IRequestUpdatePostOptions {
 }
 
 export interface IResponsePost {
-  id: number;
+  id: string;
   title: string;
   body: string;
 }

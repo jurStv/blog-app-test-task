@@ -39,17 +39,17 @@ export const updateSearchQuery = createAction(
 
 export const requestDeletePost = createAction(
   '[Posts] Request Delete Post',
-  props<{ id: number; notificationDisabled?: boolean; }>()
+  props<{ id: string; notificationDisabled?: boolean; }>()
 );
 
 export const requestDeletePostSuccess = createAction(
   '[Posts] Request Delete Post Success',
-  props<{ id: number; }>()
+  props<{ id: string; }>()
 );
 
 export const requestDeletePostFailure = createAction(
   '[Posts] Request Delete Post Failure',
-  props<{ id: number; error: any; }>()
+  props<{ id: string; error: any; }>()
 );
 
 export const requestUpdatePost = createAction(
@@ -68,7 +68,7 @@ export const requestUpdatePostSuccess = createAction(
 
 export const requestUpdatePostFailure = createAction(
   '[Posts] Request Update Post Failure',
-  props<{ id: number; error: any; }>()
+  props<{ id: string; error: any; }>()
 );
 
 export const requestCreatePost = createAction(
