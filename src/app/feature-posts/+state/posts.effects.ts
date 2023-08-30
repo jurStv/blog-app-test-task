@@ -8,8 +8,7 @@ import { catchError, debounceTime, distinctUntilChanged, map, skip, switchMap, w
 import { not } from 'ramda';
 
 import { batchActions, go, IAppState } from '@app/shared/+state';
-import * as operations from '@app/feature-posts/data-access';
-import { IRequestPostsOptions, IResponsePostsData, IResponsePost } from '@app/feature-posts/models';
+import { PostsGqlService } from '@app/feature-posts/data-access';
 import { TopProgressBarService } from '@app/shared/progress';
 
 import * as actions from './posts.actions';
@@ -23,6 +22,7 @@ export class PostsEffects {
     private store: Store<IAppState>,
     private snackBar: MatSnackBar,
     private progress: TopProgressBarService,
+    private postsGql: PostsGqlService
   ) {}
 
   getPosts: Observable<Action> = createEffect(() =>
@@ -34,28 +34,15 @@ export class PostsEffects {
         this.store.select(selectors.selectPostsFilters),
       ),
       tap(() => this.progress.showTopProgressBar('PostsEffects.getPosts')),
-      switchMap(([_, { pageSize, pageIndex }, { searchQuery }]) => {
-        const options: IRequestPostsOptions = {
-          paginate: {
-            limit: pageSize,
-            page: pageIndex,
-          },
-          search: {
-            q: searchQuery,
-          }
-        };
-
-        return this.apollo.query<IResponsePostsData>({
-          query: operations.getPosts,
-          variables: { options }
-        }).pipe(
-          map(({ data: { posts: { data, meta } } }) => batchActions({ actions: [
+      switchMap(([_, { pageSize, pageIndex }, { searchQuery }]) =>
+        this.postsGql.getPosts(pageSize, pageIndex, searchQuery).pipe(
+          map(({ posts: { data, meta } }) => batchActions({ actions: [
             actions.requestPostsSuccess({ results: data }),
             actions.setPostPagingTotalResults({ totalResults: meta.totalCount })
           ] })),
           catchError((error) => of(actions.requestPostsFailure({ error })))
-        );
-      }),
+        )
+      ),
       tap(() => this.progress.hideTopProgressBar('PostsEffects.getPosts')),
     )
   );
@@ -82,13 +69,14 @@ export class PostsEffects {
       debounceTime(300),
       tap(() => this.progress.showTopProgressBar('PostsEffects.deletePost')),
       switchMap(({ id, notificationDisabled }) => {
-        return this.apollo.mutate({
-          mutation: operations.deletePost,
-          variables: { id }
-        }).pipe(
+        return this.postsGql.deletePost(id).pipe(
           tap(() => {
             if (not(notificationDisabled)) {
-              this.snackBar.open('The post was successfully deleted!', 'Ok', { duration: 1500, horizontalPosition: 'right' });
+              this.snackBar.open(
+                'The post was successfully deleted!',
+                'Ok',
+                { duration: 1500, horizontalPosition: 'right' }
+              );
             }
           }),
           map(() => actions.requestDeletePostSuccess({ id })),
@@ -105,10 +93,7 @@ export class PostsEffects {
       debounceTime(300),
       tap(() => this.progress.showTopProgressBar('PostsEffects.updatePost')),
       switchMap(({ options, notificationDisabled, requiresNavigationToList }) => {
-        return this.apollo.mutate<IResponsePost>({
-          mutation: operations.updatePost,
-          variables: { ...options }
-        }).pipe(
+        return this.postsGql.updatePost(options).pipe(
           tap(() => {
             if (not(notificationDisabled)) {
               this.snackBar.open('Changes were successfully saved!', 'Ok', { duration: 1500, horizontalPosition: 'right' });
@@ -137,10 +122,7 @@ export class PostsEffects {
       debounceTime(300),
       tap(() => this.progress.showTopProgressBar('PostsEffects.createPost')),
       switchMap(({ options, notificationDisabled, requiresNavigationToList }) => {
-        return this.apollo.mutate<IResponsePost>({
-          mutation: operations.createPost,
-          variables: { ...options }
-        }).pipe(
+        return this.postsGql.createPost(options).pipe(
           tap(() => {
             if (not(notificationDisabled)) {
               this.snackBar.open('New post was successfully created!', 'Ok', { duration: 1500, horizontalPosition: 'right' });
